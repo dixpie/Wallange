@@ -5,9 +5,13 @@ import requests
 import time
 import json
 import os
+from tkinter import filedialog
+from tkinter import *
+
+root = Tk()
+root.withdraw()
 waitTime = 5
-drive = "c:\\"
-folder = "\\Users\\Raven\\Desktop\\cams\\wallpaper"
+folder = filedialog.askdirectory()
 
 
 def wall(image_path):
@@ -15,13 +19,13 @@ def wall(image_path):
     SPIF_UPDATEINIFILE = 0x0001
     SPIF_SENDWININICHANGE = 0x0002
     image = image_path
-    image_path2 = os.path.join(drive, folder, image)
+    image_path2 = os.path.join( folder, image)
     user32 = ctypes.WinDLL('user32')
     SystemParametersInfo = user32.SystemParametersInfoW
     SystemParametersInfo(SPI_SETDESKWALLPAPER, 0,image_path2, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE)
 
 def main():
-    image_path = os.path.join(drive, folder)
+    image_path = os.path.join( folder)
     images = os.listdir(image_path)
     for image in images[:]:
         if not image.endswith(("png", "jpg", "ico", "jpeg")):
@@ -42,6 +46,5 @@ def main():
             print(e)
             time.sleep(waitTime)
             continue
-
 
 main()
