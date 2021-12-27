@@ -12,14 +12,19 @@ root = Tk()
 root.withdraw()
 waitTime = 5
 
+
 def Write():
-    f = open("Config.txt", "a")
+    f = open("config.txt", "a")
     f.write(filedialog.askdirectory())
     f.close()
+def Invalid():
+    os.remove("config.txt") 
+    Write()
+    return open("config.txt", "r").read()
 try:
     folder = open("config.txt", "r").read()
-except :
-    Write();
+except:
+    Write()
     folder = open("config.txt", "r").read()
 
 
@@ -31,15 +36,19 @@ def wall(image_path):
     image_path2 = os.path.join(folder, image)
     user32 = ctypes.WinDLL('user32')
     SystemParametersInfo = user32.SystemParametersInfoW
-    SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, image_path2,SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE)
+    SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, image_path2,
+                         SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE)
 
 
 def main():
     image_path = os.path.join(folder)
-    images = os.listdir(image_path)
+    try :
+        images = os.listdir(image_path)
+    except :
+       images = os.listdir(Invalid())
     for image in images[:]:
         if not image.endswith(("png", "jpg", "ico", "jpeg")):
-            images.remove(image)
+             images.remove(image)
     counter = 0
     while counter <= len(images):
         try:
