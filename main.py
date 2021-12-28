@@ -10,9 +10,14 @@ from tkinter import *
 
 root = Tk()
 root.withdraw()
-waitTime = 5
-
-
+isOkay = False
+while isOkay == False :
+    try:
+        inputN = input("How long should I wait? >>")
+        waitTime = int(inputN)
+        isOkay = True
+    except:
+        isOkay = False
 def Write():
     f = open("config.txt", "a")
     f.write(filedialog.askdirectory())
@@ -36,8 +41,7 @@ def wall(image_path):
     image_path2 = os.path.join(folder, image)
     user32 = ctypes.WinDLL('user32')
     SystemParametersInfo = user32.SystemParametersInfoW
-    SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, image_path2,
-                         SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE)
+    SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, image_path2, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE)
 
 
 def main():
