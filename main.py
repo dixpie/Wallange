@@ -10,14 +10,14 @@ from tkinter import *
 
 root = Tk()
 root.withdraw()
-isOkay = False
-while isOkay == False :
+hasTime = False
+while hasTime == False :
     try:
         inputN = input("How long should I wait? >>")
         waitTime = int(inputN)
-        isOkay = True
+        hasTime = True
     except:
-        isOkay = False
+        hasTime = False
 def Write():
     f = open("config.txt", "a")
     f.write(filedialog.askdirectory())
